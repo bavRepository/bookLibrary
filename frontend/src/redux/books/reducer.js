@@ -1,14 +1,17 @@
-import * as a from './actionTypes'
+import * as a from "./actionTypes"
 
 const initialState = []
 
 const booksReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case a.ADD_BOOK:
-      return [...state, action.payload]
-    default:
-      return state
-  }
+	switch (action.type) {
+		case a.ADD_BOOK:
+			return [...state, action.payload]
+		case a.DELETE_BOOK: {
+			return state.filter(item => item.id != action.payload)
+		}
+		default:
+			return state
+	}
 }
 
 export default booksReducer
