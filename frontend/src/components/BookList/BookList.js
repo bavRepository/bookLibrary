@@ -9,8 +9,11 @@ const BookList = () => {
 	const books = useSelector(state => state.books)
 	const dispatch = useDispatch()
 
-	const onClickHandler = id => {
+	const handleDeleteBook = id => {
 		dispatch(deleteBook(id))
+	}
+	const handleToggleBook = id => {
+		dispatch(toggleFavorite(id))
 	}
 
 	return (
@@ -27,7 +30,18 @@ const BookList = () => {
 								<div className='book-info'>
 									{++i}. {book.title} by <strong>{book.author}</strong>
 								</div>
-								<button onClick={() => onClickHandler(book.id)}>Clear</button>
+								<div className='book-actions'>
+									<span onClick={() => handleToggleBook(book.id)}>
+										{book.isFavorite ? (
+											<BsBookmarkStarFill className='star-icon' />
+										) : (
+											<BsBookmarkStar className='star-icon' />
+										)}
+									</span>
+									<button onClick={() => handleDeleteBook(book.id)}>
+										Clear
+									</button>
+								</div>
 							</li>
 						)
 					})}
