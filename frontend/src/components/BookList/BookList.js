@@ -2,6 +2,9 @@ import "./bookList.scss"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { deleteBook } from "../../redux/books/actionCreators"
+import { BsBookmarkStar, BsBookmarkStarFill } from "react-icons/bs"
+import { toggleFavorite } from "../../redux/books/actionCreators"
+
 const BookList = () => {
 	const books = useSelector(state => state.books)
 	const dispatch = useDispatch()
