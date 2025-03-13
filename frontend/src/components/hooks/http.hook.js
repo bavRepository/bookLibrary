@@ -8,13 +8,28 @@ export const useHttp = () => {
 			body = null,
 			headers = { "Content-Type": "application/json" }
 		) => {
-			const response = await fetch(url, { method, body, headers })
-			if (!response.ok) {
-				throw new Error(`Could not fetch ${url}, status: ${response.status}`)
-			}
+			let pr
+			try {
+				const response = await fetch(url, { method, body, headers }).catch(e =>
+					//never work with local file request
+					console.log("Error1")
+				)
 
-			const data = await response.json()
-			return data
+				if (!response.ok) {
+					//never work with local file request
+					throw new Error(`Could not fetch ${url}, status: ${response.status}`)
+				}
+				const data = await response.json()
+				pr = new Promise(resolved => {
+					setTimeout(() => {
+						resolved(data)
+					}, 500)
+				})
+			} catch (e) {
+				//only point on the Error in our promise
+				console.log("Error2")
+			}
+			return pr
 		},
 		[]
 	)

@@ -6,7 +6,6 @@ const useBookService = () => {
 	const getBooks = async () => {
 		return await request(`./books.json`)
 	}
-
 	return {
 		getBooks
 	}
