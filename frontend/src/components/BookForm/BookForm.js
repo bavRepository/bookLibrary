@@ -1,16 +1,17 @@
 import "./bookForm.scss"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import { addBook } from "../../redux/books/actionCreators"
 import useBookService from "../../data/BookService"
 import createBookWithId from "../../utils/createBookWithId"
+
+import { test } from "../../redux/books/reducer.js"
 
 const BookForm = () => {
 	const [title, setTitle] = useState("")
 	const [author, setAuthor] = useState("")
 	const dispatch = useDispatch()
 	const { getBooks } = useBookService()
-
 	const handleSubmit = e => {
 		e.preventDefault()
 
