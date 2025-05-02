@@ -9,21 +9,6 @@ import {
 	selectFavoriteFilter
 } from "../../redux/slices/filterSlice"
 
-const highlightMatch = (text, filter) => {
-	if (!filter) return text
-	const regex = new RegExp(`(${filter})`, "gi")
-	return text.split(regex).map((subString, i) => {
-		if (subString.toLowerCase() === filter.toLowerCase()) {
-			return (
-				<span key={i} className='highlight'>
-					{subString}
-				</span>
-			)
-		}
-		return subString
-	})
-}
-
 const BookList = () => {
 	const books = useSelector(state => state.books)
 	const titleFilter = useSelector(selectTitleFilter)
@@ -41,6 +26,23 @@ const BookList = () => {
 
 		return matchesTitle && matchesAuthor && matchesFavorite
 	})
+
+	const highlightMatch = (text, filter) => {
+		if (!filter) return text
+		const regex = new RegExp(`(${filter})`, "gi")
+
+		return text.split(regex).map((subString, i) => {
+			if (subString.toLowerCase() === filter.toLowerCase()) {
+				return (
+					<span key={i} className='highlight'>
+						{subString}
+					</span>
+				)
+			}
+			return subString
+		})
+	}
+
 	const handleDeleteBook = id => {
 		dispatch(deleteBook(id))
 	}
@@ -72,7 +74,7 @@ const BookList = () => {
 										)}
 									</span>
 									<button onClick={() => handleDeleteBook(book.id)}>
-										Clear
+										Delete
 									</button>
 								</div>
 							</li>

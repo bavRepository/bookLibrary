@@ -10,24 +10,30 @@ export const useHttp = () => {
 		) => {
 			let pr
 			try {
-				const response = await fetch(url, { method, body, headers }).catch(e =>
-					//never work with local file request
-					console.log("Error1")
-				)
+				//it is a simple emulation of the server's request operation
+				// we get book data from our local file in 500 ms
+				pr = new Promise(resolve => {
+					setTimeout(async () => {
+						const response = await fetch(url, { method, body, headers }).catch(
+							error =>
+								//if we have some troubles with access to local file in our case
+								console.error(error)
+						)
 
-				if (!response.ok) {
-					//never work with local file request
-					throw new Error(`Could not fetch ${url}, status: ${response.status}`)
-				}
-				const data = await response.json()
-				pr = new Promise(resolved => {
-					setTimeout(() => {
-						resolved(data)
-					}, 500)
+						if (!response.ok) {
+							//will never work with local file request if file ok
+							throw new Error(
+								`Could not fetch ${url}, status: ${response.status}`
+							)
+						}
+						const data = await response.json()
+
+						resolve(data)
+					}, 1500)
 				})
-			} catch (e) {
+			} catch (error) {
 				//only point on the Error in our promise
-				console.log("Error2")
+				console.error(error)
 			}
 			return pr
 		},
