@@ -30,7 +30,7 @@ export const selectBooks = state => state.books
 
 export const thunkFunction = async (dispatch, getState) => {
 	console.log(getState()) // get store info
-	//async action
+
 	try {
 		const res = await axios.get(`http://localhost:4000/random-book`)
 
