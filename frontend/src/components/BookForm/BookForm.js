@@ -11,11 +11,12 @@ const BookForm = () => {
 	const [author, setAuthor] = useState("")
 	const dispatch = useDispatch()
 	const { getBooks } = useBookService()
+
 	const handleSubmit = e => {
 		e.preventDefault()
 
 		if (title && author) {
-			const book = createBookWithId({ title, author })
+			const book = createBookWithId({ title, author }, "manual")
 			dispatch(addBook(book))
 
 			setTitle("")
@@ -28,7 +29,7 @@ const BookForm = () => {
 			const res = await axios.get(`http://localhost:4000/random-book`)
 
 			if (res?.data?.title && res?.data?.author) {
-				dispatch(addBook(createBookWithId(res.data)))
+				dispatch(addBook(createBookWithId(res.data, "API")))
 			}
 		} catch (error) {
 			console.log("Error fetching random book", error)
@@ -39,7 +40,7 @@ const BookForm = () => {
 		const data = await getBooks()
 		const randomIndex = (Math.random() * data.length).toFixed()
 
-		const book = createBookWithId({ ...data[randomIndex] })
+		const book = createBookWithId({ ...data[randomIndex] }, "random")
 		dispatch(addBook(book))
 	}
 
