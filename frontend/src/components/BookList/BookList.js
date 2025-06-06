@@ -35,7 +35,6 @@ const BookList = () => {
 	const highlightMatch = (text, filter) => {
 		if (!filter) return text
 		const regex = new RegExp(`(${filter})`, "gi")
-
 		return text.split(regex).map((subString, i) => {
 			if (subString.toLowerCase() === filter.toLowerCase()) {
 				return (

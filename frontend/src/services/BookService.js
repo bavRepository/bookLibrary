@@ -1,4 +1,4 @@
-import { useHttp } from "../components/hooks/http.hook"
+import { useHttp } from "../hooks/http.hook"
 
 const useBookService = () => {
 	const { request } = useHttp()
